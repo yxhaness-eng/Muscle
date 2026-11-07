@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MUSCLE / 012</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<aside class="sidebar" id="sidebar">
+  <div class="logo">MUSCLE<span>/ 012</span></div>
+  <nav class="nav" id="nav">
+    <button class="nav-btn active" data-section="overview">
+      <svg viewBox="0 0 24 24"><path d="M3 12l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>
+      <span>Обзор</span>
+    </button>
+    <button class="nav-btn" data-section="workouts">
+      <svg viewBox="0 0 24 24"><path d="M6.5 6.5v11M17.5 6.5v11M3 9v6M21 9v6M6.5 12h11"/></svg>
+      <span>Тренировки</span>
+    </button>
+    <button class="nav-btn" data-section="nutrition">
+      <svg viewBox="0 0 24 24"><path d="M12 8c-3-2-7-1-8 3-1 4 2 8 6 8 1 3 3 4 5 4-1-2-1-4 0-6 3-1 5-4 4-7-1-2-4-3-7-2z"/><path d="M12 8c0-2 1-4 4-5"/></svg>
+      <span>Питание</span>
+    </button>
+    <button class="nav-btn" data-section="progress">
+      <svg viewBox="0 0 24 24"><path d="M3 17l6-6 4 4 8-8M15 7h6v6"/></svg>
+      <span>Прогресс</span>
+    </button>
+    <button class="nav-btn" data-section="habits">
+      <svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 12l2 2 4-4"/></svg>
+      <span>Привычки</span>
+    </button>
+  </nav>
+  <div class="sidebar-footer">v1.0 · MVP</div>
+</aside>
+
+<main class="main">
+
+  <!-- ОБЗОР -->
+  <section class="section active" id="section-overview">
+    <header class="section-head">
+      <h1>Обзор</h1>
+      <p class="section-sub" id="overview-date"></p>
+    </header>
+
+    <div class="grid">
+      <div class="card">
+        <div class="card-label">Текущий вес</div>
+        <div class="card-big" id="ov-weight">—</div>
+        <div class="card-hint">Целевой: 70 кг</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Прогресс к цели</div>
+        <div class="progress-track"><div class="progress-fill" id="ov-goal-fill"></div></div>
+        <div class="card-hint" id="ov-goal-text">Добавьте вес в разделе «Прогресс»</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Калории за день</div>
+        <div class="card-big" id="ov-kcal">0</div>
+        <div class="card-hint">ккал</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Белок за день</div>
+        <div class="card-big" id="ov-protein">0</div>
+        <div class="card-hint">грамм</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Тренировки за неделю</div>
+        <div class="card-big" id="ov-workouts">0</div>
+        <div class="card-hint">за последние 7 дней</div>
+      </div>
+      <div class="card">
+        <div class="card-label">Привычки сегодня</div>
+        <div class="card-big" id="ov-habits">0/0</div>
+        <div class="progress-track slim"><div class="progress-fill" id="ov-habits-fill"></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ТРЕНИРОВКИ -->
+  <section class="section" id="section-workouts">
+    <header class="section-head">
+      <h1>Тренировки</h1>
+      <p class="section-sub">Записывайте подходы и сохраняйте тренировки</p>
+    </header>
+
+    <div class="two-col">
+      <div class="card">
+        <h2 class="card-title">Новая тренировка</h2>
+
+        <div id="wo-exercise-list"></div>
+
+        <div class="inline-form">
+          <input type="text" id="wo-exercise-name" placeholder="Название упражнения">
+          <button class="btn ghost" id="wo-add-exercise">+ Упражнение</button>
+        </div>
+
+        <div id="wo-sets-area" class="hidden">
+          <div class="sets-head" id="wo-current-exercise"></div>
+          <div id="wo-sets-list"></div>
+          <div class="inline-form">
+            <input type="number" id="wo-reps" placeholder="Повторы" min="1" inputmode="numeric">
+            <input type="number" id="wo-weight" placeholder="Вес, кг" min="0" step="0.5" inputmode="decimal">
+            <button class="btn ghost" id="wo-add-set">+ Подход</button>
+          </div>
+        </div>
+
+        <div class="card-actions">
+          <button class="btn accent" id="wo-save">Сохранить тренировку</button>
+          <button class="btn ghost" id="wo-clear">Очистить</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">История тренировок</h2>
+        <div id="wo-history" class="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПИТАНИЕ -->
+  <section class="section" id="section-nutrition">
+    <header class="section-head">
+      <h1>Питание</h1>
+      <p class="section-sub">Учёт калорий и макроэлементов за день</p>
+    </header>
+
+    <div class="grid macros">
+      <div class="card macro-card">
+        <div class="card-label">Калории</div>
+        <div class="card-big" id="nu-kcal">0</div>
+        <div class="card-hint">ккал</div>
+      </div>
+      <div class="card macro-card">
+        <div class="card-label">Белки</div>
+        <div class="card-big" id="nu-protein">0</div>
+        <div class="card-hint">г</div>
+      </div>
+      <div class="card macro-card">
+        <div class="card-label">Жиры</div>
+        <div class="card-big" id="nu-fat">0</div>
+        <div class="card-hint">г</div>
+      </div>
+      <div class="card macro-card">
+        <div class="card-label">Углеводы</div>
+        <div class="card-big" id="nu-carbs">0</div>
+        <div class="card-hint">г</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div class="card">
+        <h2 class="card-title">Добавить продукт</h2>
+        <div class="form-grid">
+          <input type="text" id="nu-name" placeholder="Название продукта">
+          <div class="macro-inputs">
+            <input type="number" id="nu-in-kcal" placeholder="ккал" min="0" inputmode="numeric">
+            <input type="number" id="nu-in-protein" placeholder="Белки, г" min="0" step="0.1" inputmode="decimal">
+            <input type="number" id="nu-in-fat" placeholder="Жиры, г" min="0" step="0.1" inputmode="decimal">
+            <input type="number" id="nu-in-carbs" placeholder="Углев., г" min="0" step="0.1" inputmode="decimal">
+          </div>
+          <button class="btn accent" id="nu-add">Добавить</button>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">Съедено сегодня</h2>
+        <div id="nu-list" class="list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПРОГРЕСС -->
+  <section class="section" id="section-progress">
+    <header class="section-head">
+      <h1>Прогресс</h1>
+      <p class="section-sub">Динамика веса и история измерений</p>
+    </header>
+
+    <div class="two-col">
+      <div>
+        <div class="card">
+          <h2 class="card-title">Записать вес</h2>
+          <div class="inline-form">
+            <input type="number" id="pr-weight" placeholder="Вес, кг" min="1" step="0.1" inputmode="decimal">
+            <button class="btn accent" id="pr-add">Записать</button>
+          </div>
+          <div class="card-hint">Целевой вес: 70 кг</div>
+        </div>
+        <div class="card">
+          <h2 class="card-title">История измерений</h2>
+          <div id="pr-history" class="list"></div>
+        </div>
+      </div>
+      <div class="card chart-card">
+        <h2 class="card-title">График веса</h2>
+        <canvas id="pr-chart"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ПРИВЫЧКИ -->
+  <section class="section" id="section-habits">
+    <header class="section-head">
+      <h1>Привычки</h1>
+      <p class="section-sub" id="hb-date"></p>
+    </header>
+
+    <div class="two-col">
+      <div class="card">
+        <h2 class="card-title">Ежедневные привычки</h2>
+        <div id="hb-list" class="list"></div>
+        <div class="inline-form">
+          <input type="text" id="hb-name" placeholder="Новая привычка">
+          <button class="btn ghost" id="hb-add">+ Добавить</button>
+        </div>
+      </div>
+      <div class="card">
+        <h2 class="card-title">Выполнение за 7 дней</h2>
+        <div id="hb-week"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script src="app.js"></script>
+</body>
+</html>
